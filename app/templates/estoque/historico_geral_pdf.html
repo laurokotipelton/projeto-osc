@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; font-size: 12px; padding: 20px; }
+    h2 { text-align: center; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #333; padding: 6px; text-align: left; }
+    th { background-color: #f0f0f0; }
+  </style>
+</head>
+<body>
+  <h2>Histórico Geral de Movimentações de Estoque</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Data</th>
+        <th>Produto</th>
+        <th>Tipo</th>
+        <th>Quantidade</th>
+        <th>Observação</th>
+        <th>Usuário</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for m in movimentacoes %}
+      <tr>
+        <td>{{ m.data.strftime('%d/%m/%Y %H:%M') }}</td>
+        <td>{{ m.produto.nome }}</td>
+        <td>{{ m.tipo }}</td>
+        <td>{{ m.quantidade }}</td>
+        <td>{{ m.observacao or '—' }}</td>
+        <td>{{ m.usuario.nome if m.usuario else '—' }}</td>
+      </tr>
+      {% endfor %}
+      {% if movimentacoes|length == 0 %}
+      <tr>
+        <td colspan="5">Nenhuma movimentação registrada.</td>
+      </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</body>
+</html>

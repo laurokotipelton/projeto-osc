@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Histórico - {{ produto.nome }}{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Histórico de Movimentações - {{ produto.nome }}</h2>
+
+<a href="{{ url_for('exportar_historico_pdf', id=produto.id) }}" target="_blank" class="btn btn-outline-danger mb-3">
+    <i class="bi bi-file-earmark-pdf"></i> Exportar PDF
+</a>  
+<a href="{{ url_for('listar_produtos') }}" class="btn btn-secondary mb-3">Voltar</a>
+
+<table class="table table-bordered table-striped">
+  <thead class="table-light">
+    <tr>
+      <th>Data</th>
+      <th>Tipo</th>
+      <th>Quantidade</th>
+      <th>Observação</th>
+      <th>Usuário</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for m in movimentacoes %}
+    <tr>
+      <td>{{ m.data.strftime('%d/%m/%Y %H:%M') }}</td>
+      <td>{{ m.tipo }}</td>
+      <td>{{ m.quantidade }}</td>
+      <td>{{ m.observacao or '—' }}</td>
+      <td>{{ m.usuario.nome if m.usuario else '—' }}</td>
+    </tr>
+    {% endfor %}
+    {% if movimentacoes|length == 0 %}
+    <tr>
+      <td colspan="4" class="text-center">Nenhuma movimentação registrada.</td>
+    </tr>
+    {% endif %}
+  </tbody>
+</table>
+{% endblock %}

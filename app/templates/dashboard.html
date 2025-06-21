@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Dashboard</h2>
+<div class="row g-4">
+
+  <!-- Total de Clientes -->
+  <div class="col-md-4">
+    <div class="card border-primary shadow-sm position-relative">
+      <div class="card-body">
+        <h5 class="card-title">Total de Clientes</h5>
+        <p class="card-text display-6">{{ total_clientes }}</p>
+        <a href="{{ url_for('listar_clientes') }}" class="stretched-link"></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Total de Ordens -->
+  <div class="col-md-4">
+    <div class="card border-dark shadow-sm position-relative">
+      <div class="card-body">
+        <h5 class="card-title">Total de Ordens</h5>
+        <p class="card-text display-6">{{ total_ordens }}</p>
+        <a href="{{ url_for('listar_ordens') }}" class="stretched-link"></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Aguardando -->
+  <div class="col-md-4">
+    <div class="card border-secondary shadow-sm position-relative">
+      <div class="card-body">
+        <h5 class="card-title">Aguardando</h5>
+        <p class="card-text display-6">{{ ordens_aguardando }}</p>
+        <a href="{{ url_for('listar_ordens') }}?status=Aguardando" class="stretched-link"></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Em andamento -->
+  <div class="col-md-4">
+    <div class="card border-warning shadow-sm position-relative">
+      <div class="card-body">
+        <h5 class="card-title">Em andamento</h5>
+        <p class="card-text display-6">{{ ordens_andamento }}</p>
+        <a href="{{ url_for('listar_ordens') }}?status=Em+andamento" class="stretched-link"></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Finalizadas -->
+  <div class="col-md-4">
+    <div class="card border-success shadow-sm position-relative">
+      <div class="card-body">
+        <h5 class="card-title">Finalizadas</h5>
+        <p class="card-text display-6">{{ ordens_finalizadas }}</p>
+        <a href="{{ url_for('listar_ordens') }}?status=Finalizado" class="stretched-link"></a>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

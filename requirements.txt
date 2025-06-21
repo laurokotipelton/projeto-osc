@@ -1,0 +1,9 @@
+Flask
+Flask-Login
+Flask-WTF
+Flask-SQLAlchemy
+Flask-Migrate
+psycopg2-binary
+email-validator
+WeasyPrint==59.0
+pydyf==0.6.0

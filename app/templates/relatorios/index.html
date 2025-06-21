@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Relatórios{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Relatórios</h2>
+
+<div class="row g-4">
+
+  <!-- Exportar Produtos -->
+  <div class="col-md-6 col-lg-4">
+    <div class="card border-primary shadow-sm position-relative">
+      <div class="card-body">
+        <h5 class="card-title">Produtos em Estoque</h5>
+        <p class="card-text">Exporta todos os produtos cadastrados.</p>
+        <a href="{{ url_for('exportar_produtos_pdf') }}" target="_blank" class="stretched-link btn btn-outline-primary">Exportar PDF</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Exportar Histórico Geral com Filtro -->
+  <div class="col-md-6 col-lg-8">
+    <div class="card border-danger shadow-sm position-relative">
+      <div class="card-body">
+        <h5 class="card-title">Histórico Geral de Movimentações</h5>
+        <form method="GET" action="{{ url_for('exportar_historico_geral_pdf') }}" target="_blank" class="row row-cols-lg-auto g-3 align-items-end">          
+          <div class="col">
+            <label for="produto_id" class="form-label">Produto</label>
+            <select name="produto_id" id="produto_id" class="form-select">
+              <option value="">Todos</option>
+              {% for p in produtos %}
+              <option value="{{ p.id }}">{{ p.nome }}</option>
+              {% endfor %}
+            </select>            
+          </div>
+          <div class="col">
+            <label for="data_inicial" class="form-label">Data Inicial</label>
+            <input type="date" name="data_inicial" id="data_inicial" class="form-control">
+          </div>
+          <div class="col">
+            <label for="data_final" class="form-label">Data Final</label>
+            <input type="date" name="data_final" id="data_final" class="form-control">
+          </div>
+          <div class="col">
+            <button type="submit" class="btn btn-outline-danger">
+              <i class="bi bi-file-earmark-pdf"></i> Exportar PDF
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

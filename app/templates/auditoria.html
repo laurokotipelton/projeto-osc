@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Auditoria de Movimentações{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Auditoria de Movimentações</h2>
+
+<table class="table table-bordered table-striped">
+  <thead class="table-light">
+    <tr>
+      <th>Data</th>
+      <th>Usuário</th>
+      <th>Produto</th>
+      <th>Tipo</th>
+      <th>Quantidade</th>
+      <th>Observação</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for m in movimentacoes %}
+    <tr>
+      <td>{{ m.data.strftime('%d/%m/%Y %H:%M') }}</td>
+      <td>{{ m.usuario.nome if m.usuario else '—' }}</td>
+      <td>{{ m.produto.nome }}</td>
+      <td>{{ m.tipo }}</td>
+      <td>{{ m.quantidade }}</td>
+      <td>{{ m.observacao or '—' }}</td>
+    </tr>
+    {% endfor %}
+    {% if movimentacoes|length == 0 %}
+    <tr>
+      <td colspan="6" class="text-center">Nenhuma movimentação registrada.</td>
+    </tr>
+    {% endif %}
+  </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %}Ordens{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Ordens</h2>
+<a href="{{ url_for('nova_ordem') }}" class="btn btn-success mb-3">Nova Ordem</a>
+
+<a href="{{ url_for('exportar_pdf', status=filtro_status, cliente_id=filtro_cliente_id) }}" class="btn btn-outline-secondary mb-3 float-end" target="_blank">
+  Exportar PDF
+</a>
+
+<form method="GET" class="row row-cols-lg-auto g-3 align-items-end mb-4">
+
+  <!-- Filtro por Status -->
+  <div class="col">
+    <label for="status" class="form-label">Status</label>
+    <select name="status" id="status" class="form-select">
+      <option value="">Todos</option>
+      <option value="Aguardando" {% if filtro_status == 'Aguardando' %}selected{% endif %}>Aguardando</option>
+      <option value="Em andamento" {% if filtro_status == 'Em andamento' %}selected{% endif %}>Em andamento</option>
+      <option value="Finalizado" {% if filtro_status == 'Finalizado' %}selected{% endif %}>Finalizado</option>
+    </select>
+  </div>
+
+  <!-- Filtro por Cliente -->
+  <div class="col">
+    <label for="cliente_id" class="form-label">Cliente</label>
+    <select name="cliente_id" id="cliente_id" class="form-select">
+      <option value="">Todos</option>
+      {% for cliente in clientes %}
+      <option value="{{ cliente.id }}" {% if filtro_cliente_id == cliente.id %}selected{% endif %}>
+        {{ cliente.nome }}
+      </option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <!-- Filtro por Data Inicial -->
+  <div class="col">
+    <label for="data_inicial" class="form-label">Data Inicial</label>
+    <input type="date" name="data_inicial" id="data_inicial"
+           class="form-control" value="{{ filtro_data_inicial or '' }}">
+  </div>
+
+  <!-- Filtro por Data Final -->
+  <div class="col">
+    <label for="data_final" class="form-label">Data Final</label>
+    <input type="date" name="data_final" id="data_final"
+           class="form-control" value="{{ filtro_data_final or '' }}">
+  </div>
+
+  <!-- Botões -->
+  <div class="col">
+    <div class="d-flex gap-2">
+      <button type="submit" class="btn btn-primary">Filtrar</button>
+      <a href="{{ url_for('listar_ordens') }}" class="btn btn-secondary">Limpar</a>
+    </div>
+  </div>
+
+</form>
+
+<table class="table table-bordered table-striped">
+  <thead class="table-light">
+    <tr>
+        <th>Título</th>
+        <th>Status</th>
+        <th>Data de Criação</th>
+        <th>Data de Conclusão</th>
+        <th>Cliente</th>
+        <th>Valor</th>
+        <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for ordem in ordens %}
+    <tr>
+        <td>{{ ordem.titulo }}</td>
+        <td>{{ ordem.status }}</td>
+        <td>{{ ordem.data_criacao.strftime('%d/%m/%Y') }}</td>
+        <td>{{ ordem.data_conclusao.strftime('%d/%m/%Y') if ordem.data_conclusao else '—' }}</td>
+        <td>{{ ordem.cliente.nome }}</td>
+        <td>R$ {{ ordem.valor or 0 }}</td>
+      <td>
+        <a href="{{ url_for('editar_ordem', id=ordem.id) }}" class="btn btn-sm btn-warning">Editar</a>
+        <form action="{{ url_for('excluir_ordem', id=ordem.id) }}" method="POST" style="display:inline;">
+          <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza?')">Excluir</button>
+        </form>
+        <a href="{{ url_for('exportar_ordem_pdf', id=ordem.id) }}" class="btn btn-sm btn-outline-secondary" title="Exportar PDF" target="_blank"><i class="bi bi-file-earmark-pdf"></i></a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
+

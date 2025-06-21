@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Movimentar Estoque{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Movimentar Estoque - {{ produto.nome }}</h2>
+
+<form method="POST">
+  {{ form.hidden_tag() }}
+
+  <div class="mb-3">
+    {{ form.tipo.label(class="form-label") }}
+    {{ form.tipo(class="form-select") }}
+  </div>
+
+  <div class="mb-3">
+    {{ form.quantidade.label(class="form-label") }}
+    {{ form.quantidade(class="form-control") }}
+  </div>
+
+  <div class="mb-3">
+    {{ form.observacao.label(class="form-label") }}
+    {{ form.observacao(class="form-control", rows=3) }}
+  </div>
+
+  <div class="d-flex gap-2">
+    <button type="submit" class="btn btn-primary">{{ form.submit.label }}</button>
+    <a href="{{ url_for('listar_produtos') }}" class="btn btn-secondary">Cancelar</a>
+  </div>
+</form>
+{% endblock %}

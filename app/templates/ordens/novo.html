@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ 'Editar' if ordem else 'Nova' }} Ordem de Serviço{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">{{ 'Editar' if ordem else 'Nova' }} Ordem de Serviço</h2>
+<form method="POST">
+  {{ form.hidden_tag() }}
+
+  <div class="mb-3">
+    {{ form.titulo.label(class="form-label") }}
+    {{ form.titulo(class="form-control") }}
+  </div>
+
+  <div class="mb-3">
+    {{ form.cliente_id.label(class="form-label") }}
+    {{ form.cliente_id(class="form-select") }}
+  </div>
+
+  <div class="mb-3">
+    {{ form.status.label(class="form-label") }}
+    {{ form.status(class="form-select") }}
+  </div>
+
+  <div class="mb-3">
+    {{ form.descricao.label(class="form-label") }}
+    {{ form.descricao(class="form-control", rows=3) }}
+  </div>
+
+  {% if ordem %}
+  <div class="mb-3">
+    <label class="form-label">Data de Criação</label>
+    <input type="text" class="form-control" value="{{ ordem.data_criacao.strftime('%d/%m/%Y %H:%M') }}" disabled>
+  </div>
+  {% endif %}
+
+  <div class="mb-3">
+    {{ form.data_conclusao.label(class="form-label") }}
+    {{ form.data_conclusao(class="form-control", type="date") }}
+  </div>
+
+  <div class="mb-3">
+    {{ form.valor.label(class="form-label") }}
+    {{ form.valor(class="form-control") }}
+  </div>
+
+  <div class="mb-3">
+    {{ form.observacoes.label(class="form-label") }}
+    {{ form.observacoes(class="form-control", rows=3) }}
+  </div>
+
+  <div class="d-flex gap-2">
+    <button type="submit" class="btn btn-primary">{{ form.submit.label }}</button>
+    <a href="{{ url_for('listar_ordens') }}" class="btn btn-secondary">Cancelar</a>
+  </div>
+</form>
+{% endblock %}
+

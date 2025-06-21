@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ 'Editar' if produto else 'Novo' }} Produto{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">{{ 'Editar' if produto else 'Novo' }} Produto</h2>
+<form method="POST">
+  {{ form.hidden_tag() }}
+
+  <div class="mb-3">
+    {{ form.nome.label(class="form-label") }}
+    {{ form.nome(class="form-control") }}
+  </div>
+
+  <div class="mb-3">
+    {{ form.descricao.label(class="form-label") }}
+    {{ form.descricao(class="form-control", rows=2) }}
+  </div>
+
+  <div class="mb-3">
+    {{ form.quantidade.label(class="form-label") }}
+    {{ form.quantidade(class="form-control") }}
+  </div>
+
+  <div class="mb-3">
+    {{ form.unidade.label(class="form-label") }}
+    {{ form.unidade(class="form-control") }}
+  </div>
+
+  <div class="mb-3">
+    {{ form.categoria.label(class="form-label") }}
+    {{ form.categoria(class="form-control") }}
+  </div>
+
+  <div class="mb-3">
+    {{ form.preco.label(class="form-label") }}
+    {{ form.preco(class="form-control") }}
+  </div>
+
+  <div class="d-flex gap-2">
+    <button type="submit" class="btn btn-primary">{{ form.submit.label }}</button>
+    <a href="{{ url_for('listar_produtos') }}" class="btn btn-secondary">Cancelar</a>
+  </div>
+</form>
+{% endblock %}

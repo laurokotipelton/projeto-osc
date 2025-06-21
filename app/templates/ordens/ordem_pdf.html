@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: Arial, sans-serif; font-size: 12px; padding: 20px; }
+        h2 { text-align: center; }
+        .info { margin-bottom: 15px; }
+        .label { font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h2>Ordem de Serviço #{{ ordem.id }}</h2>
+
+    <div class="info"><span class="label">Título:</span> {{ ordem.titulo }}</div>
+    <div class="info"><span class="label">Cliente:</span> {{ ordem.cliente.nome }}</div>
+    <div class="info"><span class="label">Status:</span> {{ ordem.status }}</div>
+    <div class="info"><span class="label">Data de criação:</span> {{ ordem.data_criacao.strftime('%d/%m/%Y') }}</div>
+    {% if ordem.data_conclusao %}
+    <div class="info"><span class="label">Data de conclusão:</span> {{ ordem.data_conclusao.strftime('%d/%m/%Y') }}</div>
+    {% endif %}
+    <div class="info"><span class="label">Valor:</span> R$ {{ ordem.valor or 0 }}</div>
+    <div class="info"><span class="label">Descrição:</span><br> {{ ordem.descricao or '-' }}</div>
+    <div class="info"><span class="label">Observações:</span><br> {{ ordem.observacoes or '-' }}</div>
+</body>
+</html>
